@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView
-} from 'react-native';
+} from 'react-native'; 
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import PostCard from '../components/PostCard';
@@ -28,12 +28,12 @@ export default class App extends React.Component {
       posts: []
     }
   }
-
+ 
   componentDidMount() {   
     this.fetchUser();
   }
 
-  async fetchUser() { 
+  async fetchUser() {  
     let theme;
     var username = firebase.auth().currentUser.uid;
     await firebase.database().ref('/users/' + username).on("value", function (snapshot) {
@@ -46,15 +46,15 @@ export default class App extends React.Component {
     this.fectData();
   }
  
-  async fectData() {
+  async fectData() {  
     var allData = [];     
-    var scoresRef = firebase.database().ref("/post");  
+    var scoresRef = await firebase.database().ref("/post");  
     scoresRef.on("value", function (snapshot)  {            
       snapshot.forEach(function (data) {        
         allData.push(data);
       }); 
-    });    
-    this.setState({ posts: allData });
+    });      
+    this.setState({ posts: allData }); 
   }
 
   renderItems = (data) => {    
@@ -82,7 +82,7 @@ export default class App extends React.Component {
           </View>
 
           <FlatList
-            keyExtractor={(item) => item.authorName}
+            keyExtractor={(item) => item.author}
             data={this.state.posts}
             renderItem={(item) => this.renderItems(item)}
             ItemSeparatorComponent={this.ItemSeparator}

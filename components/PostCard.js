@@ -26,12 +26,15 @@ export default class App extends React.Component {
   componentDidMount() {    
     this.setData();    
   }
-  async setData() { 
-    await this.setState({data:this.props.cardData})
-    var data = this.state.data[2];
-    console.log(data);
+  async setData() {     
+    var aldata = [];
+    this.props.cardData.forEach(element => {      
+      aldata.push(element);                
+    });
+    await this.setState({data:aldata})
     var image;
-    var imageName = data;
+    var imageName = this.state.data[2];    
+    console.log(this.state.data[2])
     switch (imageName) {
       case "Image1":
         image = require('../assets/image_1.jpg')
@@ -57,7 +60,7 @@ export default class App extends React.Component {
       default:
         break;
     }
-    this.setState({ lightTheme: this.props.lightTheme, image:image })
+    await this.setState({ lightTheme: this.props.lightTheme, image:image })
   }
 
   render() { 
