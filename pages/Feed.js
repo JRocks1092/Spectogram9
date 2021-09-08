@@ -35,7 +35,7 @@ export default class App extends React.Component {
 
   async fetchUser() { 
     let theme;
-    var username = "firebase.auth().currentUser.uid";
+    var username = firebase.auth().currentUser.uid;
     await firebase.database().ref('/users/' + username).on("value", function (snapshot) {
       theme = snapshot.val().current_theme; 
     });
