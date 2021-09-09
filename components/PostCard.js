@@ -17,55 +17,50 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      lightTheme: false, 
+      lightTheme: false,
       image: require('../assets/image_3.jpg'),
-      data:{}
+      data: {}
     }
   }
 
-  componentDidMount() {    
-    this.setData();    
+  componentDidMount() {
+    this.setData();
   }
-  async setData() {     
-    var aldata = [];
-    this.props.cardData.forEach(element => {      
-      aldata.push(element);                
-    });
-    await this.setState({data:aldata})
+  async setData() {    
+    await this.setState({ data:this.props.cardData});
+    console.log(this.state.data);
     var image;
-    var imageName = this.state.data[2];    
-    console.log(this.state.data[2])
-    switch (imageName) {
-      case "Image1":
-        image = require('../assets/image_1.jpg')
-        break;
-      case "Image2":
-        image = require('../assets/image_2.jpg')        
-        break;
-      case "Image3":
-        image = require('../assets/image_3.jpg')
-        break;
-      case "Image4":
-        image = require('../assets/image_4.jpg')
-        break;
-      case "Image5":
-        image = require('../assets/image_5.jpg')
-        break;
-      case "Image6":
-        image = require('../assets/image_6.jpg')
-        break;
-      case "Image7":
-        image = require('../assets/image_7.jpg')
-        break;
-      default:
-        break;
+    var imageName = this.props.cardData.image;        
+    if (imageName == "Image1") {
+      image = require('../assets/image_1.jpg'); 
     }
-    await this.setState({ lightTheme: this.props.lightTheme, image:image })
+    else if (imageName == "Image2") {
+      image = require('../assets/image_2.jpg');
+    }
+    else if (imageName == "Image3") {
+      image = require('../assets/image_3.jpg');
+    }
+    else if (imageName == "Image4") {
+      image = require('../assets/image_4.jpg');
+    }
+    else if (imageName == "Image5") {
+      image = require('../assets/image_5.jpg');
+    }
+    else if (imageName == "Image6") {
+      image = require('../assets/image_6.jpg');
+    }
+    else if (imageName==="Image7") {
+      console.log("hi");
+      image = require('../assets/image_7.jpg');
+    }else{
+      console.log(imageName);
+    }
+    await this.setState({ lightTheme: this.props.lightTheme, image: image })
   }
 
-  render() { 
+  render() {
     return (
-      <View style={this.state.lightTheme ? styles.containerLight : styles.container}> 
+      <View style={this.state.lightTheme ? styles.containerLight : styles.container}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('PostScreen', { data: this.props.cardData, lightTheme: this.props.lightTheme })}>
           <Image source={this.state.image} style={styles.image} />
 

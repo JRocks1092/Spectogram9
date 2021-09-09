@@ -18,20 +18,48 @@ export default class App extends React.Component {
     super();
     this.state = {
       data: '',
-      lightTheme:false
+      lightTheme:false,
+      image:require("../assets/logo.png")
     }
   }
   componentDidMount() {
     this.setData();
   }
   setData() {
-    this.setState({ data: this.props.route.params.data, lightTheme:this.props.route.params.lightTheme })
+    var image;
+    var imageName = this.props.route.params.data.image;        
+    if (imageName == "Image1") {
+      image = require('../assets/image_1.jpg'); 
+    }
+    else if (imageName == "Image2") {
+      image = require('../assets/image_2.jpg');
+    }
+    else if (imageName == "Image3") {
+      image = require('../assets/image_3.jpg');
+    }
+    else if (imageName == "Image4") {
+      image = require('../assets/image_4.jpg');
+    }
+    else if (imageName == "Image5") {
+      image = require('../assets/image_5.jpg');
+    }
+    else if (imageName == "Image6") {
+      image = require('../assets/image_6.jpg');
+    }
+    else if (imageName==="Image7") {
+      console.log("hi");
+      image = require('../assets/image_7.jpg');
+    }else{
+      console.log(imageName);
+    }    
+    this.setState({ image:image,data: this.props.route.params.data, lightTheme:this.props.route.params.lightTheme })
   }
   render() { 
     return (
       <View style={this.state.lightTheme ?styles.container:styles.containerDark}>
-        <Text style={this.state.lightTheme ?styles.heading:styles.headingDark}>{this.state.data.authorName}</Text>
-        <Image source={require('../assets/image_3.jpg')} style={styles.image} />
+        <Text style={this.state.lightTheme ?styles.heading:styles.headingDark}>{this.state.data.author}</Text>
+        <Image source={this.state.image} style={styles.image} />
+        <Text style={this.state.lightTheme ?styles.heading:styles.headingDark}>{this.state.data.createOn}</Text>
         <Text style={this.state.lightTheme ?styles.text:styles.textDark}>{this.state.data.caption}</Text>
         <TouchableOpacity style={styles.touchableOpacity}>
           <IonIcons name={"heart"} color={"white"} size={RFValue(30)}>
